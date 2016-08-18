@@ -22,15 +22,12 @@ object ComposedDsl {
     import Currencies._
     import FixedIncomeTradeMarketRuleDsl._
 
+
     val user = "john"
 
     // Listing 6.18 The Trade Lifecycle DSL
-
-    withTrade(
-      200 discount_bonds IBM
-        for_client NOMURA
-          on NYSE
-          at 72.ccy(USD)) {trade =>
+    val fixIncome = 200 discount_bonds IBM for_client NOMURA on NYSE  at 72.ccy(USD)
+    withTrade(fixIncome.asInstanceOf[FixedIncomeTrade]) {trade =>
             Mailer(user) mail trade
             Logger() log trade
         } cashValue

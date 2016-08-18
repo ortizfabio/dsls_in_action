@@ -21,7 +21,7 @@ object Main {
 
     import TradeDslM._
 
-    val trds =
+    val trds :List[Trade] =
       for {
         trade <- trades
         trValidated <- validate(trade)

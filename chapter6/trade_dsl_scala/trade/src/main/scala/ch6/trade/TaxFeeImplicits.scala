@@ -2,7 +2,7 @@ package ch6.trade
 package dsl
 
 object TaxFeeImplicits {
-  class TaxHelper(factor: Double) {
+  case class TaxHelper(factor: Double) {
     def percent_of(c: BigDecimal) = factor * c.doubleValue / 100
   }
 

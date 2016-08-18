@@ -33,10 +33,10 @@ trait TaxFeeRulesComponent {
     import TaxFeeImplicits._
     override def calculatedAs(trade: Trade):
         PartialFunction[TaxFee, BigDecimal] = {
-      case TradeTax   => 5.  percent_of trade.principal
-      case Commission => 20. percent_of trade.principal
-      case Surcharge  => 7.  percent_of trade.principal
-      case VAT        => 7.  percent_of trade.principal
+      case TradeTax   => 5.0  percent_of trade.principal
+      case Commission => 20.0 percent_of trade.principal
+      case Surcharge  => 7.0  percent_of trade.principal
+      case VAT        => 7.0  percent_of trade.principal
     }
   }
 }

@@ -32,6 +32,6 @@ case class BrokerAccount(no: String, name: String,
   }
 
 object Accounts {
-  case object NOMURA extends ClientAccount("Nom-123", "Nomura")
+  object NOMURA extends ClientAccount("Nom-123", "Nomura")
 }
 

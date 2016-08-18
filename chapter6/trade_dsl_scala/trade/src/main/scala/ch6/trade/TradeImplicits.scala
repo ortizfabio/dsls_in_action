@@ -14,24 +14,24 @@ object TradeImplicits {
   type Money = (Int, Currency)
 
   class InstrumentHelper(qty: Quantity) {
-    def discount_bonds(db: DiscountBond) = (db, qty)
-    def equities(eq: Equity) = (eq, qty)
+    def discount_bonds(db: DiscountBond) = (db:DiscountBond, qty:Quantity)
+    def equities(eq: Equity) = (eq:Equity, qty:Quantity)
   }
 
   class AccountHelper(wiq: WithInstrumentQuantity) {
-    def for_client(ca: ClientAccount) = (ca, wiq._1, wiq._2)
+    def for_client(ca: ClientAccount) = (ca:ClientAccount, wiq._1:Instrument, wiq._2:Quantity)
   }
 
   class MarketHelper(waiq: WithAccountInstrumentQuantity) {
-    def on(mk: Market) = (mk, waiq._1, waiq._2, waiq._3)
+    def on(mk: Market) = (mk:Market, waiq._1:Account, waiq._2:Instrument, waiq._3:Quantity)
   }
 
   class RichInt(v: Int) {
-    def ccy(c: Currency) = (v, c)
+    def ccy(c: Currency) = (v:Int, c:Currency)
   }
 
   class PriceHelper(wmaiq: WithMktAccountInstrumentQuantity) {
-    def at(c: Money) = (c, wmaiq._1, wmaiq._2, wmaiq._3, wmaiq._4)
+    def at(c: Money) = (c:Money, wmaiq._1:Market, wmaiq._2:Account, wmaiq._3:Instrument, wmaiq._4:Quantity)
   }
 
   implicit def quantity2InstrumentHelper(qty: Quantity) = new InstrumentHelper(qty)
@@ -41,10 +41,9 @@ object TradeImplicits {
   implicit def int2RichInt(v: Int) = new RichInt(v)
 
   import Util._
-  implicit def Tuple2Trade(t: (Money, Market, Account, Instrument, Quantity)) =
+  implicit def Tuple2Trade(t: (Money, Market, Account, Instrument, Quantity)):Trade =
     t match {
       case ((money, mkt, account, ins: DiscountBond, qty)) =>
-
         FixedIncomeTradeImpl(
           tradingAccount = account,
           instrument = ins,
@@ -53,9 +52,8 @@ object TradeImplicits {
           market = mkt,
           quantity = qty,
           unitPrice = money._1)
-/**
-      case ((money, mkt, account, ins: Equity, qty)) =>
 
+      case ((money, mkt, account, ins: Equity, qty)) =>
         EquityTradeImpl(
           tradingAccount = account,
           instrument = ins,
@@ -63,6 +61,7 @@ object TradeImplicits {
           tradeDate = TODAY,
           market = mkt,
           quantity = qty,
-          unitPrice = money._1) **/
+          unitPrice = money._1)
+      case _ => throw new IllegalArgumentException("invalid trade type")
     }
 }

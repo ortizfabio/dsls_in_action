@@ -16,7 +16,7 @@ case class Mailer(user: String) {
     println("sending mail to user: " + user)
 }
 
-case class Logger {
+case class Logger() {
   def log(trade: Trade): Unit = {
     println("logging trade: " + trade)
   }

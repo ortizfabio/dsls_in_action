@@ -44,6 +44,6 @@ case class DiscountBond(
   val percent: BigDecimal) extends FixedIncome
 
 object Instruments {
-  case object IBM extends DiscountBond("ISIN-1234", TODAY, TODAY, 10000, 4)
-  case object IBM_EQ extends Equity("ISIN-3456")
+  object IBM extends DiscountBond("ISIN-1234", TODAY, TODAY, 10000, 4)
+  object IBM_EQ extends Equity("ISIN-3456")
 }
